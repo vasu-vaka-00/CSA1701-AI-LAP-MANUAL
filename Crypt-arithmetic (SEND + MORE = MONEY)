@@ -1,0 +1,19 @@
+# cryptarithmetic.py
+import itertools
+
+def solve_send_more_money():
+    letters = 'SENDMORY'  # unique letters
+    for perm in itertools.permutations('0123456789', len(letters)):
+        mapping = dict(zip(letters, perm))
+        if mapping['S']=='0' or mapping['M']=='0': continue
+        S,E,N,D,M,O,R,Y = [int(mapping[c]) for c in 'SENDMORY']
+        send = 1000*S + 100*E + 10*N + D
+        more = 1000*M + 100*O + 10*R + E
+        money = 10000*M + 1000*O + 100*N + 10*E + Y
+        if send + more == money:
+            return mapping, send, more, money
+    return None
+
+if __name__=="__main__":
+    sol = solve_send_more_money()
+    print(sol)

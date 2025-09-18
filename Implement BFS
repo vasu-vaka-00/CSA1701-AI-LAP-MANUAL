@@ -1,0 +1,18 @@
+# bfs_graph.py
+from collections import deque
+
+def bfs(graph, start):
+    visited = set([start])
+    q = deque([start])
+    order = []
+    while q:
+        v = q.popleft()
+        order.append(v)
+        for nb in graph.get(v,[]):
+            if nb not in visited:
+                visited.add(nb); q.append(nb)
+    return order
+
+if __name__=="__main__":
+    g = {'A':['B','C'],'B':['D'],'C':['E'],'D':[],'E':[]}
+    print(bfs(g,'A'))

@@ -1,0 +1,34 @@
+# missionaries_cannibals.py
+from collections import deque
+
+def valid(state):
+    Ml,Cl,boat = state
+    Mr = 3-Ml; Cr = 3-Cl
+    if Ml<0 or Cl<0 or Mr<0 or Cr<0: return False
+    if (Ml>0 and Ml<Cl) or (Mr>0 and Mr<Cr): return False
+    return True
+
+def solve():
+    start = (3,3,1)
+    goal = (0,0,0)
+    moves = [(1,0),(2,0),(0,1),(0,2),(1,1)]
+    q = deque([(start,[])])
+    seen = set([start])
+    while q:
+        state,path = q.popleft()
+        if state==goal: return path + [state]
+        Ml,Cl,boat = state
+        for m,c in moves:
+            if boat==1:
+                ns = (Ml-m, Cl-c, 0)
+            else:
+                ns = (Ml+m, Cl+c, 1)
+            if valid(ns) and ns not in seen:
+                seen.add(ns)
+                q.append((ns, path+[state]))
+    return None
+
+if __name__=="__main__":
+    sol = solve()
+    for s in sol:
+        print(s)

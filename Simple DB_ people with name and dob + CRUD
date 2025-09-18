@@ -1,0 +1,11 @@
+% people_db.pl
+:- dynamic person/2.  % person(Name, DOB).
+
+% sample facts
+person('Alice','1990-01-01').
+person('Bob','1985-05-12').
+
+add_person(Name,DOB) :- assertz(person(Name,DOB)).
+remove_person(Name) :- retractall(person(Name,_)).
+find_person(Name, DOB) :- person(Name, DOB).
+list_people :- forall(person(N,D), (write(N), write(' - '), writeln(D))).

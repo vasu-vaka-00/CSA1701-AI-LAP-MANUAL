@@ -1,0 +1,23 @@
+% monkey_banana.pl
+% State represented as state(MonkeyPos, BoxPos, BananaPos, HasBananaBool).
+
+move(state(M,B,B,false), push, state(M2,B2,B,false)) :-
+    adjacent(M,B), M2 = B, B2 = M.  % swapped (monkey pushes box onto adjacent)
+
+move(state(P,B,B,false), climb, state(P,B,B,true)) :-
+    P == B.  % monkey climbs when at box position under banana
+
+move(state(M,B,_,false), walk(M2), state(M2,B,_,false)) :-
+    adjacent(M,M2).
+
+adjacent(a,b). adjacent(b,a). adjacent(b,c). adjacent(c,b).  % simple 3-locations
+
+% Depth-first search planner:
+solve(State,Goal,Visited,[]) :- State = Goal.
+solve(State,Goal,Visited,[Act|Rest]) :-
+    move(State,Act,Next),
+    \+ member(Next,Visited),
+    solve(Next,Goal,[Next|Visited],Rest).
+
+% Example query:
+% ?- solve(state(a,a,c,false), state(_,_,_,true), [state(a,a,c,false)], Plan).

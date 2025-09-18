@@ -1,0 +1,19 @@
+# simple_db.py
+import sqlite3
+def init_db(conn):
+    conn.execute("CREATE TABLE IF NOT EXISTS people(id INTEGER PRIMARY KEY, name TEXT, dob TEXT)")
+    conn.commit()
+
+def add_person(conn, name, dob):
+    conn.execute("INSERT INTO people(name,dob) VALUES (?,?)",(name,dob)); conn.commit()
+
+def list_people(conn):
+    cur = conn.execute("SELECT id,name,dob FROM people")
+    return cur.fetchall()
+
+if __name__=="__main__":
+    conn = sqlite3.connect(":memory:")  # change to 'people.db' to persist
+    init_db(conn)
+    add_person(conn, "Alice", "1990-01-01")
+    add_person(conn, "Bob", "1985-05-12")
+    print(list_people(conn))

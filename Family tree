@@ -1,0 +1,16 @@
+% family.pl
+parent(john,mary).
+parent(susan,mary).
+parent(mary,alice).
+parent(mary,bob).
+parent(alice,carol).
+
+mother(M,C) :- parent(M,C), female(M).
+father(F,C) :- parent(F,C), male(F).
+% supply genders for sample
+male(john). male(bob).
+female(susan). female(mary). female(alice). female(carol).
+
+sibling(X,Y) :- parent(P,X), parent(P,Y), X \= Y.
+ancestor(A,D) :- parent(A,D).
+ancestor(A,D) :- parent(A,Mid), ancestor(Mid,D).

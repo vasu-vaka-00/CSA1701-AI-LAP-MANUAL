@@ -1,0 +1,10 @@
+% diet.pl
+disease(diabetes).
+disease(hypertension).
+disease(obesity).
+
+diet_for(diabetes, 'Low sugar, moderate carbs, frequent small meals').
+diet_for(hypertension, 'Low salt, DASH style, reduce processed foods').
+diet_for(obesity, 'Calorie deficit, high protein, exercise').
+
+suggest_diet(PatientDisease,Plan) :- disease(PatientDisease), diet_for(PatientDisease,Plan).

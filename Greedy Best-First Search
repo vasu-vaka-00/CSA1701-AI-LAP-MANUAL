@@ -1,0 +1,24 @@
+% best_first.pl
+% nodes and neighbors are defined by neighbor(Node,Neighbor,Cost).
+% heuristic(Node,H) must be provided.
+
+:- dynamic open/2.   % open(Node, Fscore)
+
+best_first(Start,Goal,Path) :-
+    retractall(open(_, _)),
+    heuristic(Start,H0), asserta(open(Start,H0)),
+    bf_loop(Goal,[],Path).
+
+bf_loop(Goal,Closed,Path) :-
+    select_best(OpenN,_),
+    ( OpenN == Goal -> reconstruct(OpenN,Closed,Path)
+    ; findall(N, (neighbor(OpenN,N,_), \+ member(N,Closed)), Ns),
+      add_open(Ns),
+      bf_loop(Goal,[OpenN|Closed],Path)
+    ).
+
+select_best(N,H) :- findall(H-N, open(N,H), Pairs), keysort(Pairs, Sorted), Sorted=[H-N|_].
+
+add_open([]).
+add_open([N|T]) :- ( open(N,_) -> true ; heuristic(N,H), asserta(open(N,H)) ), add_open(T).
+% reconstruct is simplified; full path reconstruction needs parent links stored.

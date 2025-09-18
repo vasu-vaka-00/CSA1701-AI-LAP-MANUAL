@@ -1,0 +1,10 @@
+% student_teacher.pl
+teaches(dr_smith, math).
+teaches(dr_jones, cs).
+teaches(dr_smith, stats).
+
+takes(alice, math).
+takes(bob, cs).
+takes(alice, cs).
+student_of(Student,Teacher) :-
+    takes(Student,Sub), teaches(Teacher,Sub).

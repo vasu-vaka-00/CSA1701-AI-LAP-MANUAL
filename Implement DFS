@@ -1,0 +1,11 @@
+# dfs_graph.py
+def dfs(graph, start, visited=None, order=None):
+    if visited is None: visited=set(); order=[]
+    visited.add(start); order.append(start)
+    for nb in graph.get(start,[]):
+        if nb not in visited: dfs(graph, nb, visited, order)
+    return order
+
+if __name__=="__main__":
+    g = {'A':['B','C'],'B':['D'],'C':['E'],'D':[],'E':[]}
+    print(dfs(g,'A'))

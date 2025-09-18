@@ -1,0 +1,13 @@
+# decision_tree_example.py
+from sklearn import tree
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# sample dataset: [feature1, feature2] labels 0/1
+X = [[0,0],[0,1],[1,0],[1,1]]
+y = [0,1,1,0]  # XOR (not great for DT but works)
+clf = tree.DecisionTreeClassifier()
+Xtr, Xte, ytr, yte = train_test_split(X,y,test_size=0.5, random_state=42)
+clf.fit(Xtr,ytr)
+pred = clf.predict(Xte)
+print("Accuracy:", accuracy_score(yte,pred))

@@ -1,0 +1,12 @@
+% planets.pl
+planet(mercury, 1, false, 58.6).  % name, order_from_sun, has_rings, day_hours
+planet(venus, 2, false, 243).
+planet(earth, 3, false, 24).
+planet(mars, 4, false, 24.6).
+planet(jupiter, 5, true, 9.9).
+planet(saturn, 6, true, 10.7).
+planet(uranus, 7, true, 17.2).
+planet(neptune, 8, true, 16.1).
+
+has_rings(P) :- planet(P,_,true,_).
+inner_planet(P) :- planet(P,Order,_,_), Order =< 4.

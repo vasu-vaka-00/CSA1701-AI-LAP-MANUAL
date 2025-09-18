@@ -1,0 +1,22 @@
+% diag.pl
+symptom(flu, fever).
+symptom(flu, cough).
+symptom(flu, body_ache).
+
+symptom(cold, cough).
+symptom(cold, sneezing).
+
+symptom(allergy, sneezing).
+symptom(allergy, itchy_eyes).
+
+possible_disease(Disease, ObservedSymptoms) :-
+    disease_symptoms(Disease, Sys),
+    subset(Sys, ObservedSymptoms).
+
+disease_symptoms(D, Syms) :- findall(S, symptom(D,S), Syms).
+
+subset([], _).
+subset([H|T], L) :- member(H,L), subset(T,L).
+
+% Example:
+% ?- disease_symptoms(D,S), possible_disease(D,[cough,fever,body_ache]).

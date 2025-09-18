@@ -1,0 +1,10 @@
+% birds.pl
+bird(canary).
+bird(penguin).
+bird(eagle).
+bird(ostrich).
+
+cannot_fly(penguin).
+cannot_fly(ostrich).
+
+can_fly(B) :- bird(B), \+ cannot_fly(B).
